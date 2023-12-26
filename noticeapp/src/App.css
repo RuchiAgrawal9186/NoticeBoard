@@ -102,6 +102,7 @@ font-family: 'Lobster', sans-serif;
   background-color: black;
   color: white;
   cursor: pointer;
+  padding-top: 2px;
 }
 .close:hover{
   opacity: 0.6;
