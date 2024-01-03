@@ -1,35 +1,33 @@
-
 import React, { useRef, useState } from "react";
 
 const NoticeCard = ({ onClose, onSave, noteId }) => {
   const [allowMove, setAllowMove] = useState(false);
   const [isEditing, setIsEditing] = useState(true);
   const [noteContent, setNoteContent] = useState("");
+  const [isPinned, setIsPinned] = useState(false);
   const stickyNoteRef = useRef();
-
   const [dx, setDx] = useState(0);
   const [dy, setDy] = useState(0);
 
-  function handleMouseDown(e) {
+  const handleMouseDown = (e) => {
     setAllowMove(true);
     const dimensions = stickyNoteRef.current.getBoundingClientRect();
     setDx(e.clientX - dimensions.x);
     setDy(e.clientY - dimensions.y);
-  }
+  };
 
-  function handleMouseMove(e) {
+  const handleMouseMove = (e) => {
     if (allowMove) {
-      // move the sticky note
       const x = e.clientX - dx;
       const y = e.clientY - dy;
       stickyNoteRef.current.style.left = x + "px";
       stickyNoteRef.current.style.top = y + "px";
     }
-  }
+  };
 
-  function handleMouseUp() {
+  const handleMouseUp = () => {
     setAllowMove(false);
-  }
+  };
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -37,16 +35,24 @@ const NoticeCard = ({ onClose, onSave, noteId }) => {
 
   const handleSaveClick = () => {
     setIsEditing(false);
-    onSave(noteId, noteContent); // Trigger the save operation
+    onSave(noteId, noteContent);
   };
 
   const handleTextareaChange = (e) => {
     setNoteContent(e.target.value);
   };
 
+  const handlePinToggle = (e) => {
+    setIsPinned(true);
+  };
+  const handleUnpinClick = () => {
+    setIsPinned(false);
+  };
   return (
     <div
-      className={`newscard ${isEditing ? "editing" : ""}`}
+      className={`newscard ${isEditing ? "editing" : ""} ${
+        isPinned ? "pinned" : "unpinned"
+      }`}
       ref={stickyNoteRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
@@ -66,6 +72,7 @@ const NoticeCard = ({ onClose, onSave, noteId }) => {
           rows="10"
           placeholder="Type...."
           value={noteContent}
+          readOnly={isPinned}
           onChange={handleTextareaChange}
         ></textarea>
       ) : (
@@ -76,7 +83,22 @@ const NoticeCard = ({ onClose, onSave, noteId }) => {
         {isEditing ? (
           <button onClick={handleSaveClick}>Save</button>
         ) : (
-          <button onClick={handleEditClick}>Edit</button>
+          <>
+            {isPinned ? (
+              <button
+                className={`unpin-btn ${isPinned ? "pinned" : ""}`}
+                onClick={handleUnpinClick}
+              >
+                Unpin
+              </button>
+            ) : (
+              <button onClick={handlePinToggle} className="pinned">
+                Pin
+              </button>
+            )}
+
+            <button onClick={handleEditClick}>Edit</button>
+          </>
         )}
       </div>
     </div>
