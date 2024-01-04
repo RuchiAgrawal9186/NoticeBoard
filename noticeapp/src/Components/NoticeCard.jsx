@@ -79,7 +79,7 @@ const NoticeCard = ({ onClose, onSave, noteId }) => {
         <div className="content">{noteContent}</div>
       )}
 
-      <div className="actions">
+      <div className="actions" style={{display:"flex",justifyContent:"space-between"}}>
         {isEditing ? (
           <button onClick={handleSaveClick}>Save</button>
         ) : (

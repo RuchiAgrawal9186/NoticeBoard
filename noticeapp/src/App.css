@@ -89,22 +89,34 @@ line-height: 20px;
 font-size: 20px;
 font-family: 'Lobster', sans-serif;
 }
-.actions{
+.actions {
   width: 100%;
-  background-color: yellow;
+  background-color: #ffc107; /* Yellow */
   margin-top: -2%;
   border: none;
-  /* position: absolute; */
   outline: none;
-  padding: 5px;
-
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.actions button{
-  background-color:chocolate;
- color:white;
- padding: 4px;
- display: flex;
- justify-content: flex-end;
+
+.actions button {
+  background-color: #d2691e; /* Chocolate Brown */
+  color: white;
+  padding: 10px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  flex-grow: 1;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 0 5px;
+  transition: background-color 0.3s ease;
+}
+
+.actions button:hover {
+  background-color: #a0522d; /* Slightly darker brown on hover */
 }
 .close{
   width:30px;
